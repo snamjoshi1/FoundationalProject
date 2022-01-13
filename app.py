@@ -6,6 +6,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from GoogleNews import GoogleNews
 from newspaper import Article
 from newspaper import Config
+from datetime import date
 from wordcloud import WordCloud, STOPWORDS
 import snscrape.modules.twitter as sntwitter
 import re
@@ -222,7 +223,6 @@ def predict():
             rfc_mod = pickle.load(f)
         print(poldf)
         positive=poldf[['Positive','Negative']]
-	from datetime import date
         d1 = dt.date.today()
         d2 = date(2022,1,7)
         result1 = diff_dates(d2,d1)
