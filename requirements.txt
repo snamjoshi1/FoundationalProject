@@ -19,7 +19,7 @@ wincertstore==0.2
 catboost>=0.2
 beautifulsoup4==4.9.3
 cloudpickle==1.6.0
-ateparser==1.1.0
+dateparser==1.1.0
 GoogleNews==1.6.0
 moneycontrolPy==0.0.5
 newspaper3k==0.2.8
