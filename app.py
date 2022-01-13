@@ -219,7 +219,7 @@ def predict():
             rfc_mod = pickle.load(f)
         print(poldf)
         positive=poldf[['Positive','Negative']]
-        predicted_val=0.60*rfc_mod.predict(positive)+(1-0.60)*m_ar.predict(1)
+        predicted_val=(1-0.60)*rfc_mod.predict(positive)+(0.60)*m_ar.predict(1)
         predicted_val
         return render_template('predict1.html', prediction_text='Your Predicted Stock Price is: {}'.format(predicted_val))
     return render_template('predict1.html')
