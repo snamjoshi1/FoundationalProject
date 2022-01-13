@@ -12,14 +12,6 @@ cffi==1.14.5
 chardet==4.0.0
 click==7.1.2
 cloudpickle==1.6.0
-clyent==1.2.2
-colorama==0.4.4
-comtypes==1.1.9
-cryptography==3.4.7
-cssselect==1.1.0
-cycler==0.10.0
-Cython==0.29.23
-cytoolz==0.11.0
 dask==2021.4.0
 dateparser==1.1.0
 decorator==5.0.6
