@@ -198,7 +198,7 @@ def login():
             return redirect(url_for('predict'))
     return render_template('login.html', error=error)
 
-@app.route('/pred',methods=['POST','GET'])com
+@app.route('/pred',methods=['POST','GET'])
 def predict():    
     if request.method == 'POST':
         article = request.form.get("Articles")
