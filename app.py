@@ -6,7 +6,6 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from GoogleNews import GoogleNews
 from newspaper import Article
 from newspaper import Config
-from datetime import date
 from wordcloud import WordCloud, STOPWORDS
 import snscrape.modules.twitter as sntwitter
 import re
@@ -32,8 +31,7 @@ def newsGoogle(CompanyName,yesterday,now):
     if CompanyName != '':
         print(f'Searching for and analyzing {CompanyName}, Please be patient, it might take a while...')
         #Extract News with Google News
-        googlenews = GoogleNews(start='01/11/2022',end='01/11/2022')
-        #googlenews = GoogleNews(period='1d')
+        googlenews = GoogleNews(start=yesterday,end=now)
         googlenews.search(CompanyName)
         result = googlenews.result()
         df_New = pd.DataFrame()
@@ -50,10 +48,10 @@ def newsGoogle(CompanyName,yesterday,now):
 def newsPerprocess(companyName):
     now = dt.date.today()
     now = now.strftime('%m-%d-%Y')
-    yesterday = dt.date.today() - dt.timedelta(days = 2)
+    yesterday = dt.date.today() - dt.timedelta(days = 1)
     print(yesterday)
     yesterday = yesterday.strftime('%m-%d-%Y')
-    dfTest=newsGoogle(companyName,yesterday,yesterday)
+    dfTest=newsGoogle(companyName,yesterday,now)
     print(dfTest)
     try:
         from datetime import datetime
@@ -137,9 +135,9 @@ def getTweets(query,noOfTweets):
 def combineData(tweetText,ArtText):
     NewCombineDF=pd.concat([tweetText,ArtText])
     NewCombineDF['Date']=pd.to_datetime(NewCombineDF['Date'])
-    NewCombineDF=NewCombineDF.groupby(['Date'], as_index = False).agg({'Summary': ','.join})
-    NewCombineDF['Summary']=NewCombineDF['Summary'].str.cat(sep=' ')
-    return NewCombineDF
+    NewCombineDF_1=NewCombineDF[['Summary']]
+    NewCombineDF_2=NewCombineDF_1['Summary'].str.cat(sep=' ')
+    return NewCombineDF_2
 
 
 
@@ -151,26 +149,20 @@ def polarity(NewCombineDF):
 #Creating empty lists
 #news_list = []
     polmap={}
-
+    print()
 #Iterating over the tweets in the dataframe
-    for news in NewCombineDF['Summary']:
-    #news_list.append(news)
-        analyzer = SentimentIntensityAnalyzer().polarity_scores(news)
-        neg = analyzer['neg']
-        neu = analyzer['neu']
-        pos = analyzer['pos']
-        comp = analyzer['compound']
+    analyzer = SentimentIntensityAnalyzer().polarity_scores(NewCombineDF)
+    neg = analyzer['neg']
+    neu = analyzer['neu']
+    pos = analyzer['pos']
+    comp = analyzer['compound']
     #print(neg,pos,neu,comp)
-        polmap.setdefault('Negative',[]).append(neg)
-        polmap.setdefault('Positive',[]).append(pos)
-        polmap.setdefault('Neutral',[]).append(neu)
-        polmap.setdefault('Comp',[]).append(comp)
+    polmap.setdefault('Negative',[]).append(neg)
+    polmap.setdefault('Positive',[]).append(pos)
+    polmap.setdefault('Neutral',[]).append(neu)
+    polmap.setdefault('Comp',[]).append(comp)
     polDF=pd.DataFrame(polmap)
     return polDF
-
-def finalData(NewCombineDF,PolDF):
-    Pol=pd.concat([NewCombineDF,PolDF],axis=1)
-    return Pol
 
 
 
@@ -180,8 +172,7 @@ def model(Article,Tweet):
     tweetText=getTweets(Tweet,1000)
     NewCombineDF=combineData(tweetText,ArtText)
     poldf=polarity(NewCombineDF)
-    final=finalData(NewCombineDF,poldf)
-    return final
+    return poldf
 
 def diff_dates(date1, date2):
     return abs(date2-date1).days
@@ -207,7 +198,7 @@ def login():
             return redirect(url_for('predict'))
     return render_template('login.html', error=error)
 
-@app.route('/pred',methods=['POST','GET'])
+@app.route('/pred',methods=['POST','GET'])com
 def predict():    
     if request.method == 'POST':
         article = request.form.get("Articles")
@@ -223,6 +214,7 @@ def predict():
             rfc_mod = pickle.load(f)
         print(poldf)
         positive=poldf[['Positive','Negative']]
+	from datetime import date
         d1 = dt.date.today()
         d2 = date(2022,1,7)
         result1 = diff_dates(d2,d1)
