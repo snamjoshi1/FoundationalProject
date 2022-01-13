@@ -182,6 +182,9 @@ def model(Article,Tweet):
     final=finalData(NewCombineDF,poldf)
     return final
 
+def diff_dates(date1, date2):
+    return abs(date2-date1).days
+
 # Initalise the Flask app
 import pickle
 app = Flask(__name__)
@@ -219,7 +222,11 @@ def predict():
             rfc_mod = pickle.load(f)
         print(poldf)
         positive=poldf[['Positive','Negative']]
-        predicted_val=(1-0.60)*rfc_mod.predict(positive)+(0.60)*m_ar.predict(1)
+	from datetime import date
+        d1 = dt.date.today()
+        d2 = date(2022,1,7)
+        result1 = diff_dates(d2,d1)
+        predicted_val=(1-0.6)*rfc_mod.predict(positive)+(0.60)*m_ar.predict(result1)[result1-1]
         predicted_val
         return render_template('predict1.html', prediction_text='Your Predicted Stock Price is: {}'.format(predicted_val))
     return render_template('predict1.html')
