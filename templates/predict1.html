@@ -3,7 +3,7 @@
 {% block header %}
   <h1>{% block title %}Predict{% endblock %}</h1>
   <br>
-  <p>By using the application, you agree to give consent to our organization to use your input data for further model refinement and internal processes. 
+  <p>Disclaimer 1: By using the application, you agree to give consent to our organization to use your input data for further model refinement and internal processes. 
      All risks from recommendations to be bourne by the user / investor and shall not in any manner / form or capacity create any liability on our organization.</p>
 {% endblock %}
 
@@ -15,10 +15,10 @@
 <br>
 <br>	
 {{ prediction_text }}
-
+<p>**The Predicted Price is valid only till the next trading session.When the trading session ends,a new price shall be predicted basis the latest sentiments for the day.</p>
 <br>
 <br>
-<p>Stock recommendations and comments presented on our website/app are solely those of the data scientists, analysts and experts quoted basis research and usage of publicly available data only. They do not represent the opinions of our website/app on whether to buy, sell or hold shares of a particular stock.
+<p>Disclaimer 2: Stock recommendations and comments presented on our website/app are solely those of the data scientists, analysts and experts quoted basis research and usage of publicly available data only. They do not represent the opinions of our website/app on whether to buy, sell or hold shares of a particular stock.
 Investors should be cautious about any and all stock recommendations and should consider the source of any advice on stock selection. Various factors, including personal or corporate ownership, may influence or factor into an expert's stock analysis or opinion.
 All investors are advised to conduct their own independent research into individual stocks before making a purchase decision. In addition, investors are advised that past stock performance is no guarantee of future price appreciation.</p>
 </form>
