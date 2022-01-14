@@ -1,10 +1,11 @@
 # FoundationalProject
 Stock Price Prediction Using Sentiment Analysis
 1. Data is scraped using GoogleAPI and Twitter API and sample code can be found in Scraping Code Folder
-2. The respective data can be found in DataFiles Folder.This Folder also contains FinalDF file that has the date used for selecting model
-3. All the analyzed models are are present in Analyzed Models folder
-4. Selected Model and the related artifacts are found in Final Model folder.This also contains a file with monitoring code using evidently
-5.Flask App and heruko deployment structure
+2. The Data Files are attached seperately.The Input data to model is found in Final_Input_DF.xlsx,Scraped News Data is found in News_Data.xlsx and tweet data is found in Tweet_Data.xlsx
+and PredictedValues for test data is found in RFPredicted_ArimaPredicted_ActualTest.xlsx
+3. All the analyzed models are present in AnalyzedModels folder
+4. Selected Model and the related artifacts are found in SelectedModel folder.This also contains a file with monitoring code using evidently
+5.Flask App and heruko deployment structure-in ModelDeployment Folder
 	-Procfile
 	-requirements.txt
 	-app.py
